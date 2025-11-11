@@ -14,7 +14,7 @@ db = SQLAlchemy(app)
 class Classificacao(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nome_disciplina = db.Column(db.String(100), unique=True, nullable=False)
-    alunos = db.relationship('Aluno', backref='classificacao', lazy=True)
+    alunos = db.relationship('Aluno', backref='classificacao', lazy=True, cascade="all, delete-orphan")
 
 class Aluno(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -28,6 +28,20 @@ class Aluno(db.Model):
 # --- Rotas ---
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    """
+    Página inicial do sistema, onde é possível fazer o upload de uma planilha
+    e criar uma classificação com base nessa planilha.
+
+    Se o upload for realizado com sucesso, retorna uma redirect para a página
+    inicial.
+
+    Se ocorrer um erro durante o upload, retorna a página inicial com uma mensagem
+    de erro.
+
+    :return: Uma página HTML com a lista de classificações, ou uma página de erro
+    com status 400.
+    :rtype: str
+    """
     erro = None
     if request.method == 'POST':
         try:
@@ -109,6 +123,28 @@ def ver_ranking(id_classificacao):
     
     except Exception as e:
         return f"Erro ao gerar ranking: {e}", 400
+    
+@app.route('/delete/<int:id_classificacao>', methods=['POST'])
+def delete_classificacao(id_classificacao):
+    """
+    Exclui uma classificação pelo seu ID.
+    
+    :param int id_classificacao: ID da classificação a ser excluída.
+    :return: Uma página HTML com o status 200, ou uma página de erro com status 400.
+    :rtype: str
+    """
+    try:
+        classificacao_para_excluir = Classificacao.query.get_or_404(id_classificacao)
+
+        db.session.delete(classificacao_para_excluir)
+        
+        db.session.commit()
+        
+    except Exception as e:
+        db.session.rollback()
+        print(f"Erro ao excluir: {e}")
+
+    return redirect(url_for('index'))
 
 
 with app.app_context():

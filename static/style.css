@@ -316,6 +316,39 @@ tr:nth-child(even) {
   background-color: var(--laranja);
 }
 
+.lista-rankings li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.lista-rankings a.ranking-link-main {
+    flex-grow: 1;
+    padding: 1.25rem 1.5rem;
+}
+
+.form-delete {
+    margin: 0;
+    padding-right: 1.5rem;
+}
+
+.btn-delete {
+    background-color: transparent;
+    color: #cc0000;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 1.1em;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+
+.btn-delete:hover {
+    opacity: 1;
+    background-color: transparent !important;
+    transform: none !important;
+}
+
 @media (max-width: 600px) {
   main.container {
     width: 90%;
