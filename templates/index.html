@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Classificador de Notas</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f9f9f9; }
+        .container { max-width: 800px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        h2, h3 { color: #333; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #f0f0f0; }
+        tr:nth-child(even) { background-color: #f7f7f7; }
+        .form-upload { margin-bottom: 20px; }
+        .error-message { color: red; font-weight: bold; margin-top: 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Classificador de Notas</h2>
+        <p>Envie uma planilha (.csv ou .xlsx) com as colunas <strong>'nome'</strong> e <strong>'nota'</strong>.</p>
+        
+        <form class="form-upload" method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required>
+            <button type="submit">Classificar</button>
+        </form>
+
+        {% if erro %}
+            <p class="error-message">{{ erro }}</p>
+        {% endif %}
+
+        {% if ranking %}
+            <hr>
+            <h3>🏆 Ranking da Turma</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Posição</th>
+                        <th>Nome</th>
+                        <th>Nota</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for aluno in ranking %}
+                    <tr>
+                        <td>{{ loop.index }}º</td>
+                        <td>{{ aluno.nome }}</td>
+                        <td>{{ aluno.nota }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+</body>
+</html>
