@@ -1,55 +1,52 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Classificador de Notas</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f9f9f9; }
-        .container { max-width: 800px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        h2, h3 { color: #333; }
-        .form-upload { margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
-        .form-upload input[type="text"] { width: 98%; padding: 8px; margin-bottom: 10px; }
-        .error-message { color: red; font-weight: bold; margin-top: 15px; }
-        .lista-rankings { list-style: none; padding: 0; }
-        .lista-rankings li { background-color: #f0f0f0; margin-bottom: 10px; padding: 15px; border-radius: 5px; }
-        .lista-rankings a { text-decoration: none; color: #007bff; font-size: 1.2em; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h2>Classificador de Notas</h2>
-        
-        <form class="form-upload" method="POST" enctype="multipart/form-data">
-            <div>
-                <label for="nome_disciplina">Nome da Disciplina:</label>
-                <input type="text" name="nome_disciplina" id="nome_disciplina" required>
-            </div>
-            <div>
-                <label for="file">Arquivo (.csv ou .xlsx):</label>
-                <input type="file" name="file" id="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required>
-            </div>
-            <button type="submit">Enviar e Classificar</button>
-        </form>
+{% extends 'base.html' %} {% block content %}
 
-        {% if erro %}
-            <p class="error-message">{{ erro }}</p>
-        {% endif %}
+<form class="form-upload" method="POST" enctype="multipart/form-data">
+  <h3>Novo Ranking</h3>
+  <div>
+    <label for="nome_disciplina">Nome da Disciplina:</label><br />
+    <input type="text" name="nome_disciplina" id="nome_disciplina" required />
+  </div>
 
-        <h3>Rankings Salvos</h3>
-        {% if classificacoes %}
-            <ul class="lista-rankings">
-                {% for c in classificacoes %}
-                <li>
-                    <a href="{{ url_for('ver_ranking', id_classificacao=c.id) }}">
-                        Ver Ranking: {{ c.nome_disciplina }}
-                    </a>
-                </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>Nenhum ranking foi enviado ainda.</p>
-        {% endif %}
+  <div>
+    <label for="file" class="custom-file-upload">
+      <div>
+        <i class="fas fa-upload"></i>
+        <span>Clique para selecionar a planilha</span>
+      </div>
+    </label>
 
-    </div>
-</body>
-</html>
+    <span id="file-name-display">Nenhum arquivo selecionado</span>
+
+    <input
+      type="file"
+      name="file"
+      id="file"
+      accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+      required
+    />
+  </div>
+
+  <button type="submit">Enviar e Classificar</button>
+</form>
+
+{% if erro %}
+<p class="error-message">{{ erro }}</p>
+{% endif %}
+
+<h3>Rankings Salvos</h3>
+{% if classificacoes %}
+<ul class="lista-rankings">
+  {% for c in classificacoes %}
+  <li>
+    <a href="{{ url_for('ver_ranking', id_classificacao=c.id) }}">
+      <span>{{ c.nome_disciplina }}</span>
+      <i class="fas fa-chevron-right"></i>
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>Nenhum ranking foi enviado ainda.</p>
+{% endif %} {% endblock %} {% block scripts %}
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+{% endblock %}
