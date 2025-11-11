@@ -1,49 +1,44 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Ranking: {{ nome_disciplina }}</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f9f9f9; }
-        .container { max-width: 800px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        h3 { color: #333; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-        th { background-color: #f0f0f0; }
-        tr:nth-child(even) { background-color: #f7f7f7; }
-        .link-voltar { margin-top: 20px; display: inline-block; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h3>🏆 Ranking: {{ nome_disciplina }}</h3>
-        
-        {% if ranking %}
-            <table>
-                <thead>
-                    <tr>
-                        <th>Posição</th>
-                        <th>Nome</th>
-                        <th>Nota</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for aluno in ranking %}
-                    <tr>
-                        <td>{{ loop.index }}º</td>
-                        <td>{{ aluno.nome }}</td>
-                        <td>{{ aluno.nota }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        {% else %}
-            <p>Nenhuma nota encontrada para esta disciplina.</p>
-        {% endif %}
+{% extends 'base.html' %} {% block title %}Ranking: {{ nome_disciplina }}{%
+endblock %} {% block content %}
 
-        <a href="{{ url_for('index') }}" class="link-voltar">
-            &larr; Voltar para a página inicial
-        </a>
-    </div>
-</body>
-</html>
+<h3>🏆 Ranking: {{ nome_disciplina }}</h3>
+
+{% if ranking %}
+
+<table>
+  <thead>
+    <tr>
+      <th>Posição</th>
+
+      <th>Nome</th>
+
+      <th>Nota</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for aluno in ranking %}
+
+    <tr>
+      <td>{{ loop.index }}º</td>
+
+      <td>{{ aluno.nome }}</td>
+
+      <td>{{ aluno.nota }}</td>
+    </tr>
+
+    {% endfor %}
+  </tbody>
+</table>
+
+{% else %}
+
+<p>Nenhuma nota encontrada para esta disciplina.</p>
+
+{% endif %}
+
+<a href="{{ url_for('index') }}" class="link-voltar">
+  &larr; Voltar para a página inicial
+</a>
+
+{% endblock %}
