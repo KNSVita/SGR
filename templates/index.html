@@ -38,10 +38,27 @@
 <ul class="lista-rankings">
   {% for c in classificacoes %}
   <li>
-    <a href="{{ url_for('ver_ranking', id_classificacao=c.id) }}">
+    <a
+      href="{{ url_for('ver_ranking', id_classificacao=c.id) }}"
+      class="ranking-link-main"
+    >
       <span>{{ c.nome_disciplina }}</span>
       <i class="fas fa-chevron-right"></i>
     </a>
+
+    <form
+      method="POST"
+      action="{{ url_for('delete_classificacao', id_classificacao=c.id) }}"
+      class="form-delete"
+    >
+      <button
+        type="submit"
+        class="btn-delete"
+        onclick="return confirm('Tem certeza que deseja excluir esta classificação? Todo o ranking será perdido.');"
+      >
+        <i class="fas fa-trash"></i>
+      </button>
+    </form>
   </li>
   {% endfor %}
 </ul>
