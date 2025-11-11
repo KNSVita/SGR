@@ -7,50 +7,49 @@
         body { font-family: Arial, sans-serif; margin: 40px; background-color: #f9f9f9; }
         .container { max-width: 800px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         h2, h3 { color: #333; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-        th { background-color: #f0f0f0; }
-        tr:nth-child(even) { background-color: #f7f7f7; }
-        .form-upload { margin-bottom: 20px; }
+        .form-upload { margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
+        .form-upload input[type="text"] { width: 98%; padding: 8px; margin-bottom: 10px; }
         .error-message { color: red; font-weight: bold; margin-top: 15px; }
+        .lista-rankings { list-style: none; padding: 0; }
+        .lista-rankings li { background-color: #f0f0f0; margin-bottom: 10px; padding: 15px; border-radius: 5px; }
+        .lista-rankings a { text-decoration: none; color: #007bff; font-size: 1.2em; }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>Classificador de Notas</h2>
-        <p>Envie uma planilha (.csv ou .xlsx) com as colunas <strong>'nome'</strong> e <strong>'nota'</strong>.</p>
         
         <form class="form-upload" method="POST" enctype="multipart/form-data">
-            <input type="file" name="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required>
-            <button type="submit">Classificar</button>
+            <div>
+                <label for="nome_disciplina">Nome da Disciplina:</label>
+                <input type="text" name="nome_disciplina" id="nome_disciplina" required>
+            </div>
+            <div>
+                <label for="file">Arquivo (.csv ou .xlsx):</label>
+                <input type="file" name="file" id="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required>
+            </div>
+            <button type="submit">Enviar e Classificar</button>
         </form>
 
         {% if erro %}
             <p class="error-message">{{ erro }}</p>
         {% endif %}
 
-        {% if ranking %}
-            <hr>
-            <h3>🏆 Ranking da Turma</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Posição</th>
-                        <th>Nome</th>
-                        <th>Nota</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for aluno in ranking %}
-                    <tr>
-                        <td>{{ loop.index }}º</td>
-                        <td>{{ aluno.nome }}</td>
-                        <td>{{ aluno.nota }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <h3>Rankings Salvos</h3>
+        {% if classificacoes %}
+            <ul class="lista-rankings">
+                {% for c in classificacoes %}
+                <li>
+                    <a href="{{ url_for('ver_ranking', id_classificacao=c.id) }}">
+                        Ver Ranking: {{ c.nome_disciplina }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Nenhum ranking foi enviado ainda.</p>
         {% endif %}
+
     </div>
 </body>
 </html>
