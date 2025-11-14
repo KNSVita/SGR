@@ -1,32 +1,44 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %} 
+
+{% block content %}
 
 <form class="form-upload" method="POST" enctype="multipart/form-data">
-  <h3>Novo Ranking</h3>
-  <div>
-    <label for="nome_disciplina">Nome da Disciplina:</label><br />
-    <input type="text" name="nome_disciplina" id="nome_disciplina" required />
-  </div>
+    <h3>Novo Ranking</h3>
+    <div>
+        <label for="nome_disciplina">Nome da Disciplina:</label><br>
+        <input type="text" name="nome_disciplina" id="nome_disciplina" required>
+    </div>
 
-  <div>
-    <label for="file" class="custom-file-upload">
-      <div>
-        <i class="fas fa-upload"></i>
-        <span>Clique para selecionar a planilha</span>
-      </div>
-    </label>
-
-    <span id="file-name-display">Nenhum arquivo selecionado</span>
-
-    <input
-      type="file"
-      name="file"
-      id="file"
-      accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-      required
-    />
-  </div>
-
-  <button type="submit">Enviar e Classificar</button>
+    <div class="pesos-grid">
+        <div>
+            <label for="peso_real_trab">Peso Real Trab:</label>
+            <input type="number" step="0.1" name="peso_real_trab" id="peso_real_trab" required>
+        </div>
+        <div>
+            <label for="peso_real_av">Peso Real AV:</label>
+            <input type="number" step="0.1" name="peso_real_av" id="peso_real_av" required>
+        </div>
+        <div>
+            <label for="peso_orig_av">Nota Máxima AV/AVS:</label>
+            <input type="number" step="0.1" name="peso_orig_av" id="peso_orig_av" required>
+        </div>
+    </div>
+    <div>
+        <label for="file" class="custom-file-upload">
+            <div>
+                <i class="fas fa-upload"></i>
+                <span>Clique para selecionar a planilha</span>
+            </div>
+        </label>
+        
+        <small class="form-help-text">
+            Verifica na planilha a coluna Trab, AV e AVS
+        </small>
+        
+        <input type="file" name="file" id="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required>
+    </div>
+    
+    <button type="submit">Enviar e Classificar</button>
 </form>
 
 {% if erro %}
@@ -64,6 +76,10 @@
 </ul>
 {% else %}
 <p>Nenhum ranking foi enviado ainda.</p>
-{% endif %} {% endblock %} {% block scripts %}
+{% endif %} 
+
+{% endblock %} 
+
+{% block scripts %}
 <script src="{{ url_for('static', filename='script.js') }}"></script>
 {% endblock %}
