@@ -34,6 +34,8 @@ header {
   align-items: center;
   justify-content: center;
   position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .header-logo {
@@ -42,7 +44,7 @@ header {
   top: 50%;
   transform: translateY(-50%);
   height: 10rem;
-  width: 15rem;
+  width: auto;
 }
 
 header h2 {
@@ -393,5 +395,21 @@ table td:first-child {
   .params-container ul {
     flex-direction: column;
     gap: 0.5rem;
+  }
+
+  header {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .header-logo {
+    position: static;
+    transform: none;
+    height: 10rem;
+    margin-bottom: 0.5rem;
+  }
+
+  header h2 {
+    font-size: 1.25rem;
   }
 }
