@@ -1,44 +1,66 @@
-{% extends 'base.html' %} {% block title %}Ranking: {{ nome_disciplina }}{%
-endblock %} {% block content %}
+{% extends 'base.html' %}
 
-<h3>🏆 Ranking: {{ nome_disciplina }}</h3>
+{% block title %}Ranking: {{ classificacao.nome_disciplina }}{% endblock %}
 
-{% if ranking %}
+{% block content %}
 
-<table>
-  <thead>
-    <tr>
-      <th>Posição</th>
+    <h3>🏆 Ranking: {{ classificacao.nome_disciplina }}</h3>
 
-      <th>Nome</th>
+    <div class="params-container">
+        <h4>Parâmetros de Cálculo Utilizados:</h4>
+        <ul>
+            <li>Peso Real Trab: <b>{{ classificacao.peso_real_trab }}</b></li>
+            <li>Peso Real AV: <b>{{ classificacao.peso_real_av }}</b></li>
+            <li>Base de Nota AV/AVS: <b>{{ classificacao.peso_orig_av }}</b></li>
+        </ul>
+    </div>
 
-      <th>Nota</th>
-    </tr>
-  </thead>
+    {% if ranking %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Posição</th>
+                    <th>Nome</th>
+                    <th>Trab (Orig)</th>
+                    <th>AV (Orig)</th>
+                    <th>AVS (Orig)</th>
+                    <th>Nota Final</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for aluno in ranking %}
+                
+                <tr>
+                    <td class="rank-position {% if aluno.posicao == 1 %}rank-gold{% elif aluno.posicao == 2 %}rank-silver{% elif aluno.posicao == 3 %}rank-bronze{% endif %}">
+                        
+                        {% if aluno.posicao == 1 %} 🥇
+                        {% elif aluno.posicao == 2 %} 🥈
+                        {% elif aluno.posicao == 3 %} 🥉
+                        {% else %} {{ aluno.posicao }}º
+                        {% endif %}
+                    </td>
+                    
+                    <td>{{ aluno.nome }}</td>
+                    <td class="nota-original">{{ aluno.nota_trab }}</td>
+                    <td class="nota-original">{{ aluno.nota_av }}</td>
+                    
+                    <td class="nota-original">
+                        {{ aluno.nota_avs if aluno.nota_avs is not none else '-' }}
+                    </td>
+                    
+                    <td class="rank-final-grade">
+                        {{ aluno.nota_final_calculada }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Nenhuma nota encontrada para esta disciplina.</p>
+    {% endif %}
 
-  <tbody>
-    {% for aluno in ranking %}
-
-    <tr>
-      <td>{{ loop.index }}º</td>
-
-      <td>{{ aluno.nome }}</td>
-
-      <td>{{ aluno.nota }}</td>
-    </tr>
-
-    {% endfor %}
-  </tbody>
-</table>
-
-{% else %}
-
-<p>Nenhuma nota encontrada para esta disciplina.</p>
-
-{% endif %}
-
-<a href="{{ url_for('index') }}" class="link-voltar">
-  &larr; Voltar para a página inicial
-</a>
+    <a href="{{ url_for('index') }}" class="link-voltar">
+        &larr; Voltar para a página inicial
+    </a>
 
 {% endblock %}

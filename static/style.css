@@ -1,3 +1,9 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 :root {
   --laranja: #ff2a00;
   --roxo: #44002d;
@@ -27,16 +33,18 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .header-logo {
   position: absolute;
-  left: 1rem;
+  left: 2rem;
   top: 50%;
   transform: translateY(-50%);
   height: 10rem;
-  width: 15rem;
+  width: auto;
 }
 
 header h2 {
@@ -117,7 +125,7 @@ h3 {
 }
 
 .form-upload input[type="text"] {
-  width: 95%;
+  width: 100%;
   padding: 0.75rem;
   border: 1px solid var(--cor-borda);
   border-radius: 5px;
@@ -156,6 +164,9 @@ button:hover {
   margin-bottom: 10px;
   border-radius: 8px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .lista-rankings li:hover {
@@ -172,6 +183,10 @@ button:hover {
   color: var(--roxo);
   font-size: 1.1em;
   font-weight: 500;
+}
+
+.lista-rankings a.ranking-link-main {
+  flex-grow: 1;
 }
 
 .lista-rankings a i {
@@ -196,7 +211,7 @@ table {
 
 th,
 td {
-  padding: 1rem;
+  padding: 0.75rem;
   text-align: left;
   border-bottom: 1px solid var(--cor-borda);
 }
@@ -205,10 +220,6 @@ th {
   background-color: var(--roxo);
   color: white;
   font-weight: 700;
-}
-
-tr:nth-child(even) {
-  background-color: var(--cor-fundo);
 }
 
 .link-voltar {
@@ -266,87 +277,100 @@ tr:nth-child(even) {
   font-size: 0.9em;
 }
 
-.rank-gold {
-  background-color: #fffbeb;
-}
-.rank-silver {
-  background-color: #fafafa;
-}
-.rank-bronze {
-  background-color: #fff3eb;
-}
-
 .rank-position {
   text-align: center;
   font-size: 1.1em;
   font-weight: 700;
 }
 
-.rank-gold .rank-position {
+.rank-position.rank-gold {
   color: #b45309;
 }
-.rank-silver .rank-position {
+.rank-position.rank-silver {
   color: #555;
 }
-.rank-bronze .rank-position {
+.rank-position.rank-bronze {
   color: #a1522c;
 }
 
-.grade-cell {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.nota-original {
+  text-align: center;
+  font-size: 0.9em;
+  color: #555;
 }
 
-.grade-bar-container {
-  background-color: var(--cor-fundo);
-  border-radius: 4px;
-  height: 10px;
-  width: 100px;
-  margin-left: 15px;
-}
-
-.grade-bar {
-  background-color: var(--roxo);
-  height: 100%;
-  border-radius: 4px;
-}
-
-.rank-gold .grade-bar {
-  background-color: var(--laranja);
-}
-
-.lista-rankings li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.lista-rankings a.ranking-link-main {
-    flex-grow: 1;
-    padding: 1.25rem 1.5rem;
+.rank-final-grade {
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.1em;
 }
 
 .form-delete {
-    margin: 0;
-    padding-right: 1.5rem;
+  margin: 0;
+  padding-right: 1.5rem;
 }
 
 .btn-delete {
-    background-color: transparent;
-    color: #cc0000;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    font-size: 1.1em;
-    opacity: 0.5;
-    transition: opacity 0.3s ease;
+  background-color: transparent;
+  color: #cc0000;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 1.1em;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
 }
 
 .btn-delete:hover {
-    opacity: 1;
-    background-color: transparent !important;
-    transform: none !important;
+  opacity: 1;
+  background-color: transparent !important;
+  transform: none !important;
+}
+
+.pesos-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.pesos-grid input[type="number"] {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: 5px;
+  font-family: "Inter", sans-serif;
+}
+
+.form-help-text {
+  display: block;
+  text-align: center;
+  font-style: italic;
+  color: #555;
+  font-size: 0.9em;
+  margin-top: 10px;
+}
+
+.params-container {
+  background: #fdfdfd;
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px;
+  padding: 0.5rem 1.5rem;
+  margin-top: 1.5rem;
+}
+.params-container h4 {
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+.params-container ul {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  gap: 2rem;
+}
+
+table th:first-child,
+table td:first-child {
+  text-align: center;
 }
 
 @media (max-width: 600px) {
@@ -362,5 +386,30 @@ tr:nth-child(even) {
 
   button {
     width: 100%;
+  }
+
+  .pesos-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .params-container ul {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  header {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .header-logo {
+    position: static;
+    transform: none;
+    height: 10rem;
+    margin-bottom: 0.5rem;
+  }
+
+  header h2 {
+    font-size: 1.25rem;
   }
 }
