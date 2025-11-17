@@ -2,6 +2,8 @@
 
 Este projeto foi desenvolvido para a disciplina de **Algoritmos e Complexidade**, com foco na aplicação de estruturas de dados e análise de complexidade.
 
+**Acesse a aplicação online:** https://sgr-production-48f7.up.railway.app/
+
 ### Algoritmo de Ordenação: Merge Sort
 
 Para cumprir os requisitos de análise de algoritmos de ordenação, o ranking utiliza do **Merge Sort** (localizada em `algoritmos.py`) para fazer a ordenação da lista final de alunos.
@@ -27,8 +29,6 @@ Para cumprir os requisitos de análise de algoritmos de ordenação, o ranking u
 *   **Ordenação**: Implementação customizada do algoritmo Merge Sort
 *   **Frontend**: HTML, CSS, JavaScript (Jinja2 para templates)
 
----
-
 ## Lógica de Cálculo de Nota
 
 O usuário fornece **3 parâmetros** no formulário de upload:
@@ -48,8 +48,6 @@ O sistema então aplica o seguinte cálculo para cada aluno:
 **Exemplo (5 no Trab, 7 na AV):**
 * Cálculo: `min(5, 3)` + `((max(7,0) / 7) * 4)` + `max(0, 5 - 3)`
 * Resultado: `3 + 4 + 2 = 9`
-
----
 
 ## Como Rodar o Projeto (Localmente)
 
@@ -133,11 +131,3 @@ A aplicação estará disponível em `http://127.0.0.1:5000/`.
 4.  Clique em "Processar Planilha".
 5.  Após o processamento, a classificação aparecerá na lista. Clique em "Ver Ranking" para visualizar a lista de alunos ordenada.
 6.  É possível excluir classificações existentes.
-
-## Contribuição
-
-Sinta-se à vontade para contribuir com o projeto. Por favor, siga as boas práticas de desenvolvimento e envie Pull Requests.
-
-## Licença
-
-Este projeto está licenciado sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
