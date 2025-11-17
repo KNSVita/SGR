@@ -30,7 +30,7 @@ Este é um sistema web desenvolvido com Flask que permite o gerenciamento de cla
 
 1.  **Clone o repositório**:
     ```bash
-    git clone https://github.com/seu-usuario/SGR.git
+    git clone https://github.com/KNSVita/SGR.git
     cd SGR
     ```
 
