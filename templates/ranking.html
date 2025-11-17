@@ -16,23 +16,24 @@
     </div>
 
     {% if ranking %}
+        {% if ranking %}
         <table>
             <thead>
                 <tr>
                     <th>Posição</th>
                     <th>Nome</th>
                     <th>Trab (Orig)</th>
+                    <th>Trab (Oficial)</th>
                     <th>AV (Orig)</th>
-                    <th>AVS (Orig)</th>
+                    <th>AV (Calc)</th>
+                    <th>Sobra (Trab)</th>
                     <th>Nota Final</th>
                 </tr>
             </thead>
             <tbody>
                 {% for aluno in ranking %}
-                
                 <tr>
                     <td class="rank-position {% if aluno.posicao == 1 %}rank-gold{% elif aluno.posicao == 2 %}rank-silver{% elif aluno.posicao == 3 %}rank-bronze{% endif %}">
-                        
                         {% if aluno.posicao == 1 %} 🥇
                         {% elif aluno.posicao == 2 %} 🥈
                         {% elif aluno.posicao == 3 %} 🥉
@@ -41,20 +42,20 @@
                     </td>
                     
                     <td>{{ aluno.nome }}</td>
+                    
                     <td class="nota-original">{{ aluno.nota_trab }}</td>
-                    <td class="nota-original">{{ aluno.nota_av }}</td>
-                    
-                    <td class="nota-original">
-                        {{ aluno.nota_avs if aluno.nota_avs is not none else '-' }}
-                    </td>
-                    
-                    <td class="rank-final-grade">
-                        {{ aluno.nota_final_calculada }}
-                    </td>
+                    <td class="nota-calculada">{{ aluno.nota_trab_oficial }}</td>
+                    <td class="nota-original">{{ aluno.nota_av_efetiva }}</td>
+                    <td class="nota-calculada">{{ aluno.nota_av_ponderada }}</td>
+                    <td class="nota-calculada">{{ aluno.sobra_trab }}</td>
+                    <td class="rank-final-grade">{{ aluno.nota_final_calculada }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+    {% else %}
+        <p>Nenhuma nota encontrada para esta disciplina.</p>
+    {% endif %}
     {% else %}
         <p>Nenhuma nota encontrada para esta disciplina.</p>
     {% endif %}
