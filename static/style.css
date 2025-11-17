@@ -373,6 +373,34 @@ table td:first-child {
   text-align: center;
 }
 
+table {
+  font-size: 0.9rem;
+}
+
+th,
+td {
+  padding: 0.6rem 0.4rem;
+  text-align: center;
+}
+
+table th:nth-child(2),
+table td:nth-child(2) {
+  text-align: left;
+}
+
+.nota-calculada {
+  font-weight: 700;
+  color: var(--roxo);
+  background-color: #f7f0fa;
+}
+
+.rank-final-grade {
+  font-weight: 700;
+  font-size: 1.1em;
+  color: var(--roxo);
+  background-color: #f7f0fa;
+}
+
 @media (max-width: 600px) {
   main.container {
     width: 90%;
